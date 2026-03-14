@@ -124,13 +124,22 @@
 }
 
 .milestones-list-item {
-  padding: 1rem 0;
+  padding: 1rem 1rem 1rem 0;
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 2rem;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, padding 0.3s ease;
+  transform-origin: right center;
+  border-radius: 4px;
+}
+
+.milestones-list-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.03);
+  padding-right: 1.5rem;
 }
 
 .milestones-list-title {
@@ -139,6 +148,12 @@
   font-weight: 500;
   color: #fff;
   opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.milestones-list-item:hover .milestones-list-title {
+  opacity: 0.8;
+  color: #fff;
 }
 
 .milestones-list-item.focused .milestones-list-title {
