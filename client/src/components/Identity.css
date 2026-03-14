@@ -1,0 +1,126 @@
+.identity-v2 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* ── Background Media ── */
+.identity-bg-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.bg-image-layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -30vw; /* Physically push the image past the right edge */
+  width: 100vw;  /* Make it wider so it still covers the left side */
+  background-size: cover;
+  background-position: right center;
+  filter: grayscale(0.4) contrast(1.1) brightness(0.7);
+  opacity: 0.9;  /* More visible */
+  transform: scaleX(-1); /* Looking at text */
+  z-index: 1;
+}
+
+.bg-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #000 35%, transparent 80%, transparent 100%); /* Adjusted fade */
+  z-index: 2;
+}
+
+/* ── Content ── */
+.v2-container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.identity-header-wrap.single-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+  text-align: left;
+  max-width: 1200px;
+  padding: 0 0 0 4vw; /* Pinned to far left */
+  margin: 0;
+}
+
+.identity-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.15;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.weight-light {
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.keyword {
+  font-weight: 900;
+  opacity: 1;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.identity-decoration {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+
+.dec-line {
+  height: 1px;
+  width: 100px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+}
+
+.dec-line.line-right {
+  background: linear-gradient(90deg, rgba(255,255,255,0.4), transparent);
+}
+
+.dec-dot {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  opacity: 0.8;
+  animation: dot-glow 2s ease-in-out infinite;
+  animation-delay: 2s; /* Start after entry animation */
+}
+
+@keyframes dot-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255,255,255,0.8); transform: scale(1); }
+  50% { box-shadow: 0 0 25px rgba(255,255,255,1); transform: scale(1.2); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .v2-container { padding: 0 2rem; }
+  .identity-v2 { height: auto; min-height: 100vh; padding: 6rem 0; }
+  .identity-header-wrap.single-view { padding: 0 2rem; }
+  .identity-headline { font-size: 2.5rem; line-height: 1.25; }
+  .dec-line { width: 80px; }
+}

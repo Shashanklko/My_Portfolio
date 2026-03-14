@@ -1,0 +1,255 @@
+:root {
+  --arsenal-bg: #030303;
+  --arsenal-grid: rgba(255, 255, 255, 0.03);
+  --arsenal-accent: #ffffff;
+  --arsenal-text-muted: rgba(255, 255, 255, 0.4);
+  --badge-bg: rgba(255, 255, 255, 0.02);
+  --badge-border: rgba(255, 255, 255, 0.05);
+  --badge-glow: rgba(255, 255, 255, 0.1);
+}
+
+.arsenal {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--arsenal-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  cursor: crosshair;
+  will-change: transform, opacity;
+}
+
+/* Structural Background */
+.arsenal__bg-structural {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.arsenal__grid {
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(var(--arsenal-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--arsenal-grid) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+.arsenal__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* Typography & Quote */
+.arsenal__quote-container {
+  width: 100%;
+  padding: 0 10%;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.arsenal__quote {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  text-align: right;
+  color: var(--arsenal-accent);
+}
+
+.q-muted {
+  font-weight: 200;
+  color: var(--arsenal-text-muted);
+}
+
+.q-bold {
+  font-weight: 800;
+  position: relative;
+  display: inline-block;
+}
+
+/* Marquee Styles */
+.arsenal__marquee-container {
+  position: relative;
+  width: 100%;
+  /* height: 300px; */
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+}
+
+.marquee__track {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+}
+
+/* Tech Badge / Card */
+.tech-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.badge__container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.badge__container::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    var(--badge-color),
+    rgba(255, 255, 255, 0.1)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+.tech-badge:hover .badge__container {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-5px);
+  border-color: var(--badge-color);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--badge-color);
+}
+
+.tech-badge:hover .badge__container::before {
+  opacity: 1;
+}
+
+.badge__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px var(--badge-color));
+  transition: transform 0.4s ease;
+}
+
+.tech-badge:hover .badge__icon {
+  transform: scale(1.1);
+}
+
+.badge__name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--arsenal-accent);
+  opacity: 0.8;
+}
+
+/* Center Marks */
+.marquee__center-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 350px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mark__top, .mark__bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--arsenal-text-muted);
+}
+
+.mark__top { top: 0; }
+.mark__bottom { bottom: 0; }
+
+.mark__top::after, .mark__bottom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: var(--arsenal-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fff;
+}
+
+/* Loading State */
+.arsenal__loading {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--arsenal-text-muted);
+  font-family: monospace;
+  letter-spacing: 0.5em;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Vignettes are handled by mask-image on container, but can add explicit ones if needed */
+.marquee__vignette-left, .marquee__vignette-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.marquee__vignette-left {
+  left: 0;
+  background: linear-gradient(to right, var(--arsenal-bg), transparent);
+}
+
+.marquee__vignette-right {
+  right: 0;
+  background: linear-gradient(to left, var(--arsenal-bg), transparent);
+}

@@ -1,0 +1,212 @@
+.legacy {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.legacy__bg-structural {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: url('/inside_train.png');
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1) contrast(1.1) brightness(0.12);
+}
+
+.legacy__grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+}
+
+.legacy__inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 5rem;
+  padding: 0 5vw;
+}
+
+.pillar__tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #6366f1;
+  letter-spacing: 0.3em;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pillar__tag::after {
+  content: '';
+  height: 1px;
+  flex-grow: 1;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), transparent);
+}
+
+/* Academic Card */
+.academic-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card-glyph {
+  font-size: 3rem;
+  color: #6366f1;
+  opacity: 0.5;
+}
+
+.legacy-degree {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.legacy-school {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.legacy-status {
+  display: block;
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #6366f1;
+  letter-spacing: 0.2em;
+}
+
+/* Experience List (Timeline) */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.exp-item {
+  display: flex;
+  gap: 2rem;
+}
+
+.exp-line-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.exp-dot {
+  width: 10px;
+  height: 10px;
+  background: #6366f1;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.exp-line {
+  width: 1px;
+  flex-grow: 1;
+  background: linear-gradient(180deg, #6366f1, transparent);
+  margin: 0.5rem 0;
+  opacity: 0.2;
+}
+
+.exp-content {
+  padding-bottom: 3rem;
+}
+
+.exp-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #6366f1;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.exp-company {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.05em;
+}
+
+.exp-role {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Passions Pillar */
+.passions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.passion-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.passion-icon {
+  font-size: 1.2rem;
+  color: var(--text-subtle);
+}
+
+.passion-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+  .legacy__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .legacy__passions-pillar {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .legacy__inner {
+    grid-template-columns: 1fr;
+  }
+  .legacy__passions-pillar {
+    grid-column: span 1;
+  }
+  .academic-card { padding: 2rem; }
+}
