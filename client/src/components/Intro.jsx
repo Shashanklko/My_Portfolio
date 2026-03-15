@@ -4,16 +4,9 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaLinkedinIn, FaGithub, FaEnvelope, FaArrowDown } from 'react-icons/fa';
 
-function Intro() {
-  const [general, setGeneral] = useState(null);
-
+function Intro({ general }) {
   // Custom Hook to fetch General info quickly for links and names if needed
-  useEffect(() => {
-    // We already fetch general in App.jsx but let's fetch here or just use static for now if it's not passed as props
-    api.get('/general').then(res => {
-      setGeneral(res.data[0]); // Assuming it returns an array
-    }).catch(err => console.log(err));
-  }, []);
+  // Data is fetched in App.jsx and passed as 'general' prop
 
   // Names Setup
   const fallbackNames = ["SHASHANK", "KUMAR"];

@@ -7,9 +7,7 @@ import { FaGithub, FaExternalLinkAlt, FaEye } from 'react-icons/fa';
 import { VscChromeClose, VscChromeMinimize, VscChromeMaximize } from 'react-icons/vsc';
 import Tilt from './common/Tilt';
 
-const Works = forwardRef(({ onNextScene }, ref) => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Works = forwardRef(({ onNextScene, projects }, ref) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [direction, setDirection] = useState(0);
@@ -42,22 +40,7 @@ const Works = forwardRef(({ onNextScene }, ref) => {
     }
   }));
 
-  useEffect(() => {
-    api.get('/projects')
-      .then(res => {
-        const processed = res.data.map(p => ({
-          ...p,
-          githubLink: p.githubLink || p.link || '',
-          liveLink: p.liveLink || ''
-        }));
-        setProjects(processed);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching projects:', err);
-        setLoading(false);
-      });
-  }, []);
+  // Data is fetched and mapped in App.jsx and passed as 'projects' prop
 
   const currentProject = projects[activeIndex];
 
@@ -70,11 +53,8 @@ const Works = forwardRef(({ onNextScene }, ref) => {
           <h2 className="works__title">PROJECT_SPECS</h2>
         </div>
 
-        {loading ? (
-          <div className="works__loading">FETCHING_PROJECT_DATABASE...</div>
-        ) : (
-          <div className="works__spec-container">
-            <AnimatePresence mode="wait" custom={direction}>
+        <div className="works__spec-container">
+          <AnimatePresence mode="wait" custom={direction}>
               {currentProject && (
                 <motion.article 
                   key={activeIndex}
@@ -161,7 +141,6 @@ const Works = forwardRef(({ onNextScene }, ref) => {
               )}
             </AnimatePresence>
           </div>
-        )}
       </div>
     </section>
   );

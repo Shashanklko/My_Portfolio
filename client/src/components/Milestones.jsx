@@ -5,9 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Milestones = forwardRef((props, ref) => {
-  const [achievements, setAchievements] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Milestones = forwardRef(({ achievements }, ref) => {
   const [selectedAch, setSelectedAch] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -32,19 +30,11 @@ const Milestones = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
-    api.get('/achievements').then(res => {
-      setAchievements(res.data);
-      if (res.data.length > 0) {
-        setActiveIndex(0);
-        setSelectedAch(res.data[0]);
-      }
-      setLoading(false);
-    }).catch(err => {
-      console.error(err);
-      setLoading(false);
-    });
-  }, []);
-
+    if (achievements && achievements.length > 0) {
+      setActiveIndex(0);
+      setSelectedAch(achievements[0]);
+    }
+  }, [achievements]);
   useEffect(() => {
     if (achievements[activeIndex]) {
       setSelectedAch(achievements[activeIndex]);
@@ -62,11 +52,8 @@ const Milestones = forwardRef((props, ref) => {
       </div>
 
       <div className="milestones__inner">
-        {loading ? (
-          <div className="milestones__loading">RETRIVING_ACHIEVEMENT_LOGS...</div>
-        ) : (
-          <div className="milestones__layout">
-            <div className="milestones__gallery-pane">
+        <div className="milestones__layout">
+          <div className="milestones__gallery-pane">
               <AnimatePresence mode="wait" custom={direction}>
                 {selectedAch && (
                   <motion.div 
@@ -149,7 +136,6 @@ const Milestones = forwardRef((props, ref) => {
               </div>
             </div>
           </div>
-        )}
       </div>
     </section>
   );

@@ -14,6 +14,7 @@ import CustomCursor from './components/CustomCursor';
 import AdminLayout from './components/admin/AdminLayout';
 import Login from './components/admin/Login';
 import GlobalBackground from './components/GlobalBackground';
+import Preloader from './components/Preloader';
 
 const TOTAL_SCENES = 7;
 const CHAPTERS = [
@@ -28,14 +29,14 @@ const CHAPTERS = [
 
 
 
-const SceneContent = ({ activeScene, arsenalRef, worksRef, legacyRef, milestonesRef, moveScene, skills, general }) => {
+const SceneContent = ({ activeScene, arsenalRef, worksRef, legacyRef, milestonesRef, moveScene, skills, general, projects, achievements, education, experiences, passions }) => {
   switch (activeScene) {
-    case 0: return <Intro />;
+    case 0: return <Intro general={Array.isArray(general) ? general[0] : general} />;
     case 1: return <Identity />;
     case 2: return <Arsenal ref={arsenalRef} skills={skills} />;
-    case 3: return <Works ref={worksRef} onNextScene={() => moveScene(1)} />;
-    case 4: return <Legacy ref={legacyRef} />;
-    case 5: return <Milestones ref={milestonesRef} />;
+    case 3: return <Works ref={worksRef} onNextScene={() => moveScene(1)} projects={projects} />;
+    case 4: return <Legacy ref={legacyRef} education={education} experiences={experiences} passions={passions} />;
+    case 5: return <Milestones ref={milestonesRef} achievements={achievements} />;
     case 6: return <Connect general={general} />;
     default: return null;
   }
@@ -53,14 +54,35 @@ function Portfolio() {
   const [general, setGeneral] = useState(null);
   const [isLoadingContent, setIsLoadingContent] = useState(true);
 
+  const [projects, setProjects] = useState([]);
+  const [achievements, setAchievements] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [passions, setPassions] = useState([]);
+
   useEffect(() => {
     // Prefetch all data to eliminate loading states during transitions
     Promise.all([
       api.get('/skills'),
-      api.get('/general')
-    ]).then(([skillsRes, generalRes]) => {
+      api.get('/general'),
+      api.get('/projects'),
+      api.get('/achievements'),
+      api.get('/education'),
+      api.get('/experience'),
+      api.get('/passions'),
+      new Promise(resolve => setTimeout(resolve, 3500))
+    ]).then(([skillsRes, generalRes, projRes, achRes, eduRes, expRes, passRes]) => {
       setSkills(skillsRes.data);
       setGeneral(generalRes.data);
+      setProjects(projRes.data.map(p => ({
+        ...p,
+        githubLink: p.githubLink || p.link || '',
+        liveLink: p.liveLink || ''
+      })));
+      setAchievements(achRes.data);
+      setEducation(eduRes.data);
+      setExperiences(expRes.data);
+      setPassions(passRes.data);
       setIsLoadingContent(false);
     }).catch(err => {
       console.error('Error prefetching data:', err);
@@ -190,11 +212,17 @@ function Portfolio() {
     <div className="app-container">
       <CustomCursor />
 
-      <GlobalBackground x={0} y={0} />
-      <div className="global-noise" />
+      <AnimatePresence>
+        {isLoadingContent && <Preloader key="preloader" />}
+      </AnimatePresence>
 
-      <AnimatePresence mode="popLayout" initial={true}>
-        <motion.div
+      {!isLoadingContent && (
+        <>
+          <GlobalBackground x={0} y={0} />
+          <div className="global-noise" />
+
+          <AnimatePresence mode="popLayout" initial={true}>
+            <motion.div
           key={scene}
           initial="initial"
           animate="animate"
@@ -279,6 +307,11 @@ function Portfolio() {
             moveScene={moveScene}
             skills={skills}
             general={general}
+            projects={projects}
+            achievements={achievements}
+            education={education}
+            experiences={experiences}
+            passions={passions}
           />
         </motion.div>
       </AnimatePresence>
@@ -303,6 +336,8 @@ function Portfolio() {
           ))}
         </div>
       </nav>
+        </>
+      )}
     </div>
   );
 }

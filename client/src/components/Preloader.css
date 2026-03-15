@@ -1,0 +1,63 @@
+.preloader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #050505; /* Black background matching theme */
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.preloader-svg-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sk-logo {
+  font-family: 'Savoir Faire JF', 'Brush Script MT', cursive, sans-serif;
+  font-weight: normal;
+  font-size: 80px;
+  width: 250px;
+  height: 120px;
+  letter-spacing: normal;
+}
+
+.sk-logo text {
+  fill: transparent;
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 1.5px;
+  /* Very large stroke-dasharray and offset to ensure full coverage of text boundaries */
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: 
+    sk-draw 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards,
+    sk-fill 1s 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes sk-draw {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sk-fill {
+  0% {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(0 0 0px rgba(255,255,255,0));
+  }
+  100% {
+    fill: rgba(255, 255, 255, 1);
+    stroke: transparent;
+    /* Adding a subtle glow effect when filled */
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+  }
+}

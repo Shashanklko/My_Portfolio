@@ -12,11 +12,7 @@ const getIcon = (iconName) => {
   return Icon ? <Icon /> : null;
 };
 
-const Legacy = forwardRef((props, ref) => {
-  const [experiences, setExperiences] = useState([]);
-  const [education, setEducation] = useState([]);
-  const [passions, setPassions] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Legacy = forwardRef(({ education, experiences, passions }, ref) => {
 
   useImperativeHandle(ref, () => ({
     handleScroll: () => {
@@ -24,22 +20,7 @@ const Legacy = forwardRef((props, ref) => {
     }
   }));
 
-  useEffect(() => {
-    Promise.all([
-      api.get('/education'),
-      api.get('/experience'),
-      api.get('/passions')
-    ]).then(([eduRes, expRes, passRes]) => {
-      setEducation(eduRes.data);
-      setExperiences(expRes.data);
-      setPassions(passRes.data);
-      setLoading(false);
-    }).catch(err => {
-      console.error(err);
-      setLoading(false);
-    });
-  }, []);
-
+  // Data is fetched in App.jsx and passed as props.
 
 
   return (
@@ -49,13 +30,10 @@ const Legacy = forwardRef((props, ref) => {
       </div>
 
       <div className="legacy__inner">
-        {loading ? (
-          <div className="legacy__loading">RECONSTRUCTING_HISTORY_LOGS...</div>
-        ) : (
-          <>
-            <div className="legacy__academic-pillar">
-              <div className="pillar__tag">ACADEMIC_FOUNDATION</div>
-              {education.length > 0 ? (
+        <>
+          <div className="legacy__academic-pillar">
+            <div className="pillar__tag">ACADEMIC_FOUNDATION</div>
+            {education.length > 0 ? (
                 <div className="academic-card">
                   <div className="card-glyph"><FaIcons.FaGraduationCap /></div>
                   <div className="card-info">
@@ -108,8 +86,7 @@ const Legacy = forwardRef((props, ref) => {
                  )}
               </div>
             </div>
-          </>
-        )}
+        </>
       </div>
     </section>
   );
