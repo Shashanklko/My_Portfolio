@@ -5,7 +5,7 @@ import { useReveal } from '../hooks/useReveal';
 import { motion } from 'framer-motion';
 import * as FaIcons from 'react-icons/fa';
 import * as SiIcons from 'react-icons/si';
-import { FaEnvelope, FaLinkedin, FaGithub, FaFileDownload } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaGithub, FaDownload } from 'react-icons/fa';
 
 const getIcon = (iconName) => {
   const allIcons = { ...FaIcons, ...SiIcons };
