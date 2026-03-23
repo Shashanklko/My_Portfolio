@@ -1,11 +1,9 @@
-import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
-import api from '../api';
-import './Milestones.css';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import './Recognitions.css';
 import * as FaIcons from 'react-icons/fa';
-
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Milestones = forwardRef(({ achievements }, ref) => {
+const Recognitions = forwardRef(({ achievements }, ref) => {
   const [selectedAch, setSelectedAch] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -22,6 +20,7 @@ const Milestones = forwardRef(({ achievements }, ref) => {
       setSelectedAch(achievements[0]);
     }
   }, [achievements]);
+
   useEffect(() => {
     if (achievements[activeIndex]) {
       setSelectedAch(achievements[activeIndex]);
@@ -33,14 +32,14 @@ const Milestones = forwardRef(({ achievements }, ref) => {
   };
 
   return (
-    <section className="milestones" id="achievements">
-      <div className="milestones__bg-structural">
-        <div className="milestones__grid" />
+    <section className="recognitions" id="recognitions">
+      <div className="recognitions__bg-structural">
+        <div className="recognitions__grid" />
       </div>
 
-      <div className="milestones__inner">
-        <div className="milestones__layout">
-          <div className="milestones__gallery-pane">
+      <div className="recognitions__inner">
+        <div className="recognitions__layout">
+          <div className="recognitions__gallery-pane">
               <AnimatePresence mode="wait" custom={direction}>
                 {selectedAch && (
                   <motion.div 
@@ -75,7 +74,7 @@ const Milestones = forwardRef(({ achievements }, ref) => {
                         transition: { duration: 0.3 }
                       })
                     }}
-                    className={`milestones-card-static ${selectedAch.type}`}
+                    className={`recognitions-card-static ${selectedAch.type}`}
                   >
                     <div className="card-glass-body">
                       <span className="card-date">{selectedAch.date}</span>
@@ -96,17 +95,17 @@ const Milestones = forwardRef(({ achievements }, ref) => {
               </AnimatePresence>
             </div>
 
-            <div className="milestones__content-pane">
-              <div className="milestones__head">
-                <h2 className="milestones__title">PROUD <br /><span className="accent-txt">MILESTONES</span></h2>
+            <div className="recognitions__content-pane">
+              <div className="recognitions__head">
+                <h2 className="recognitions__title">PROFESSIONAL <br /><span className="accent-txt">RECOGNITIONS</span></h2>
               </div>
 
-              <div className="milestones__list-wrapper">
-                <div className="milestones__list-container">
+              <div className="recognitions__list-wrapper">
+                <div className="recognitions__list-container">
                   {achievements.map((ach, i) => (
                     <motion.div
                       key={ach._id}
-                      className={`milestones-list-item ${activeIndex === i ? 'focused' : ''} ${ach.type}`}
+                      className={`recognitions-list-item ${activeIndex === i ? 'focused' : ''} ${ach.type}`}
                       whileHover={{ 
                         x: -15,
                         transition: { type: 'spring', stiffness: 400, damping: 10 }
@@ -120,9 +119,9 @@ const Milestones = forwardRef(({ achievements }, ref) => {
                         setActiveIndex(i);
                       }}
                     >
-                      <div className="milestones-list-line" />
-                      <span className="milestones-list-title">{ach.title}</span>
-                      <span className="milestones-list-year">{ach.date || '2024'}</span>
+                      <div className="recognitions-list-line" />
+                      <span className="recognitions-list-title">{ach.title}</span>
+                      <span className="recognitions-list-year">{ach.date || '2024'}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -134,4 +133,4 @@ const Milestones = forwardRef(({ achievements }, ref) => {
   );
 });
 
-export default Milestones;
+export default Recognitions;

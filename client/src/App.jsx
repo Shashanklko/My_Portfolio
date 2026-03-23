@@ -9,6 +9,7 @@ import Works from './components/Works';
 import Legacy from './components/Legacy';
 import Arsenal from './components/Arsenal';
 import Milestones from './components/Milestones';
+import Recognitions from './components/Recognitions';
 import Connect from './components/Connect';
 import CustomCursor from './components/CustomCursor';
 import AdminLayout from './components/admin/AdminLayout';
@@ -16,7 +17,7 @@ import Login from './components/admin/Login';
 import GlobalBackground from './components/GlobalBackground';
 import Preloader from './components/Preloader';
 
-const TOTAL_SCENES = 7;
+const TOTAL_SCENES = 8;
 const CHAPTERS = [
   { id: '01', title: 'Intro', x: 0, y: 0 },
   { id: '02', title: 'Identity', x: 0, y: 100 },
@@ -24,20 +25,22 @@ const CHAPTERS = [
   { id: '04', title: 'Works', x: 100, y: 0 },
   { id: '05', title: 'Legacy', x: 200, y: 0 },
   { id: '06', title: 'Milestones', x: 200, y: 100 },
-  { id: '07', title: 'Connect', x: 300, y: 0 }
+  { id: '07', title: 'Recognition', x: 300, y: 100 },
+  { id: '08', title: 'Connect', x: 300, y: 0 }
 ];
 
 
 
-const SceneContent = ({ activeScene, arsenalRef, worksRef, legacyRef, milestonesRef, moveScene, skills, general, projects, achievements, education, experiences, passions }) => {
+const SceneContent = ({ activeScene, arsenalRef, worksRef, legacyRef, milestonesRef, recognitionsRef, moveScene, skills, general, projects, achievements, education, experiences, passions }) => {
   switch (activeScene) {
     case 0: return <Intro general={Array.isArray(general) ? general[0] : general} />;
     case 1: return <Identity />;
     case 2: return <Arsenal ref={arsenalRef} skills={skills} />;
     case 3: return <Works ref={worksRef} onNextScene={() => moveScene(1)} projects={projects} />;
     case 4: return <Legacy ref={legacyRef} education={education} experiences={experiences} passions={passions} />;
-    case 5: return <Milestones ref={milestonesRef} achievements={achievements} />;
-    case 6: return <Connect general={general} />;
+    case 5: return <Milestones ref={milestonesRef} achievements={achievements.filter(a => a.type === 'win')} />;
+    case 6: return <Recognitions ref={recognitionsRef} achievements={achievements.filter(a => a.type === 'cert')} />;
+    case 7: return <Connect general={general} />;
     default: return null;
   }
 };
@@ -97,6 +100,7 @@ function Portfolio() {
   const worksRef = useRef();
   const legacyRef = useRef();
   const milestonesRef = useRef();
+  const recognitionsRef = useRef();
   const lastScrollTime = useRef(Date.now());
 
   const getTransitionConfig = (from, to) => {
@@ -110,7 +114,8 @@ function Portfolio() {
       '2-3': { x: 0, y: -1 },   // Arsenal -> Works: Vertical
       '3-4': { x: 1, y: 0 },    // Works -> Legacy: Horizontal
       '4-5': { x: 0, y: 1 },    // Legacy -> Milestones: Vertical
-      '5-6': { x: 1, y: 0, type: 'mirror' } // Milestones -> Connect: Split Mirror
+      '5-6': { x: 1, y: 0 },    // Milestones -> Recognitions: Horizontal
+      '6-7': { x: 0, y: -1, type: 'mirror' } // Recognitions -> Connect: Split Mirror
     };
 
     const config = configs[pair] || { x: 0, y: isForward ? 1 : -1 };
@@ -141,6 +146,12 @@ function Portfolio() {
     // Sub-scrolling logic for Milestones (Index 5 in CHAPTERS)
     if (scene === 5 && milestonesRef.current) {
       const handled = milestonesRef.current.handleScroll(numDir);
+      if (handled) return;
+    }
+
+    // Sub-scrolling logic for Recognitions (Index 6 in CHAPTERS)
+    if (scene === 6 && recognitionsRef.current) {
+      const handled = recognitionsRef.current.handleScroll(numDir);
       if (handled) return;
     }
 
@@ -304,6 +315,7 @@ function Portfolio() {
             worksRef={worksRef}
             legacyRef={legacyRef}
             milestonesRef={milestonesRef}
+            recognitionsRef={recognitionsRef}
             moveScene={moveScene}
             skills={skills}
             general={general}
