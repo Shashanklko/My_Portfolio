@@ -15,8 +15,24 @@ const getIcon = (iconName) => {
 
 function Connect({ general }) {
   const docKeywords = ['resume', 'cv', 'letter', 'doc', 'cert', 'resulme', 'specialized'];
-  const customLinkName = general?.customLinkName?.toLowerCase() || '';
-  const isDocLink = docKeywords.some(kw => customLinkName.includes(kw));
+  
+  // Combine legacy custom link with the new customLinks array
+  const allCustomLinks = [
+    ...(general?.customLinkName ? [{ 
+      name: general.customLinkName, 
+      url: general.customLinkUrl, 
+      icon: general.customLinkIcon 
+    }] : []),
+    ...(general?.customLinks || [])
+  ];
+
+  const socialLinks = allCustomLinks.filter(link => 
+    !docKeywords.some(kw => link.name?.toLowerCase().includes(kw))
+  );
+
+  const documentLinks = allCustomLinks.filter(link => 
+    docKeywords.some(kw => link.name?.toLowerCase().includes(kw))
+  );
 
   return (
     <section className="connect" id="connect">
@@ -43,22 +59,22 @@ function Connect({ general }) {
                 <a href={general?.github || 'https://github.com/Shashanklko'} target="_blank" rel="noopener noreferrer" className="connect__link-item">
                   <FaGithub /> GITHUB
                 </a>
-                {general?.customLinkName && general?.customLinkUrl && !isDocLink && (
-                  <a href={general.customLinkUrl} target="_blank" rel="noopener noreferrer" className="connect__link-item">
-                    {getIcon(general.customLinkIcon)} {general.customLinkName.toUpperCase()}
+                {socialLinks.map((link, idx) => (
+                  <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="connect__link-item">
+                    {getIcon(link.icon)} {link.name?.toUpperCase()}
                   </a>
-                )}
+                ))}
               </div>
 
               <div className="connect__resume-side">
                 <a href={general?.resumeUrl || "#"} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                  RESUME <FaFileDownload />
+                  RESUME <FaDownload />
                 </a>
-                {general?.customLinkName && general?.customLinkUrl && isDocLink && (
-                  <a href={general.customLinkUrl} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                    {general.customLinkName.toUpperCase()} <FaFileDownload />
+                {documentLinks.map((link, idx) => (
+                  <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
+                    {link.name?.toUpperCase()} <FaDownload />
                   </a>
-                )}
+                ))}
               </div>
             </div>
           </div>

@@ -10,7 +10,12 @@ const generalSchema = new mongoose.Schema({
   resumeUrl: { type: String },
   customLinkName: { type: String },
   customLinkUrl: { type: String },
-  customLinkIcon: { type: String }
+  customLinkIcon: { type: String },
+  customLinks: [{
+    name: { type: String },
+    url: { type: String },
+    icon: { type: String }
+  }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('General', generalSchema);

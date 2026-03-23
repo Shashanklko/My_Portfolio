@@ -4,7 +4,20 @@ import { FaSave } from 'react-icons/fa';
 import '../AdminShared.css';
 
 function GeneralAdmin() {
-  const [formData, setFormData] = useState({ name: '', role: '', secondaryRole: '', location: '', email: '', github: '', linkedin: '', resumeUrl: '', customLinkName: '', customLinkUrl: '', customLinkIcon: '' });
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    role: '', 
+    secondaryRole: '', 
+    location: '', 
+    email: '', 
+    github: '', 
+    linkedin: '', 
+    resumeUrl: '', 
+    customLinkName: '', 
+    customLinkUrl: '', 
+    customLinkIcon: '',
+    customLinks: [] 
+  });
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const token = localStorage.getItem('token');
@@ -93,6 +106,79 @@ function GeneralAdmin() {
             <input value={formData.customLinkIcon || ''} placeholder="FaTwitter" onChange={e => setFormData({ ...formData, customLinkIcon: e.target.value })} />
           </div>
         </div>
+
+        <div className="section-divider" style={{ margin: '2rem 0', height: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+
+        <div className="section-header">
+          <h4>Additional Custom Links</h4>
+          <p>Add more specialized links or social profiles here.</p>
+        </div>
+
+        {(formData.customLinks || []).map((link, index) => (
+          <div key={index} className="form-row" style={{ alignItems: 'flex-end', background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+            <div className="form-group">
+              <label>Link Name</label>
+              <input 
+                value={link.name || ''} 
+                placeholder="e.g. PORTFOLIO, BLOG" 
+                onChange={e => {
+                  const newLinks = [...formData.customLinks];
+                  newLinks[index].name = e.target.value;
+                  setFormData({ ...formData, customLinks: newLinks });
+                }} 
+              />
+            </div>
+            <div className="form-group">
+              <label>URL</label>
+              <input 
+                value={link.url || ''} 
+                placeholder="https://..." 
+                onChange={e => {
+                  const newLinks = [...formData.customLinks];
+                  newLinks[index].url = e.target.value;
+                  setFormData({ ...formData, customLinks: newLinks });
+                }} 
+              />
+            </div>
+            <div className="form-group">
+              <label>Icon (FaName)</label>
+              <input 
+                value={link.icon || ''} 
+                placeholder="FaExternalLinkAlt" 
+                onChange={e => {
+                  const newLinks = [...formData.customLinks];
+                  newLinks[index].icon = e.target.value;
+                  setFormData({ ...formData, customLinks: newLinks });
+                }} 
+              />
+            </div>
+            <button 
+              type="button" 
+              className="delete-btn" 
+              style={{ padding: '0.8rem', height: 'fit-content' }}
+              onClick={() => {
+                const newLinks = formData.customLinks.filter((_, i) => i !== index);
+                setFormData({ ...formData, customLinks: newLinks });
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+
+        <button 
+          type="button" 
+          className="add-btn" 
+          style={{ marginBottom: '2rem', background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', padding: '0.6rem 1.2rem', borderRadius: '4px', cursor: 'pointer' }}
+          onClick={() => {
+            setFormData({ 
+              ...formData, 
+              customLinks: [...(formData.customLinks || []), { name: '', url: '', icon: '' }] 
+            });
+          }}
+        >
+          + Add New Custom Link
+        </button>
 
         <div className="form-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button type="submit" className="submit-btn" disabled={isSaving}>
