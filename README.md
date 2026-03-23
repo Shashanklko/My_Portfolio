@@ -1,6 +1,6 @@
-# Personal 3D Portfolio
+# Personal Portfolio
 
-A modern, dynamic, and interactive 3D portfolio website built with React, Three.js, and Node.js. This project features a full-stack architecture with a React-based frontend and a Node/Express/MongoDB backend for content management.
+A modern, dynamic, and interactive portfolio website built with React, Three.js, and Node.js. This project features a full-stack architecture with a React-based frontend and a Node/Express/MongoDB backend for content management.
 
 ## 🚀 Features
 
