@@ -14,6 +14,10 @@ const getIcon = (iconName) => {
 };
 
 function Connect({ general }) {
+  const docKeywords = ['resume', 'cv', 'letter', 'doc', 'cert', 'resulme', 'specialized'];
+  const customLinkName = general?.customLinkName?.toLowerCase() || '';
+  const isDocLink = docKeywords.some(kw => customLinkName.includes(kw));
+
   return (
     <section className="connect" id="connect">
       <div className="connect__bg-structural">
@@ -39,7 +43,7 @@ function Connect({ general }) {
                 <a href={general?.github || 'https://github.com/Shashanklko'} target="_blank" rel="noopener noreferrer" className="connect__link-item">
                   <FaGithub /> GITHUB
                 </a>
-                {general?.customLinkName && general?.customLinkUrl && (
+                {general?.customLinkName && general?.customLinkUrl && !isDocLink && (
                   <a href={general.customLinkUrl} target="_blank" rel="noopener noreferrer" className="connect__link-item">
                     {getIcon(general.customLinkIcon)} {general.customLinkName.toUpperCase()}
                   </a>
@@ -48,8 +52,13 @@ function Connect({ general }) {
 
               <div className="connect__resume-side">
                 <a href={general?.resumeUrl || "#"} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                  RESUME <FaFileDownload />
+                  RESUME <FaDownload />
                 </a>
+                {general?.customLinkName && general?.customLinkUrl && isDocLink && (
+                  <a href={general.customLinkUrl} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
+                    {general.customLinkName.toUpperCase()} {getIcon(general.customLinkIcon)}
+                  </a>
+                )}
               </div>
             </div>
           </div>

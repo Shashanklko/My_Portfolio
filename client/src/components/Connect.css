@@ -121,6 +121,7 @@
 .connect__resume-side {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* ── Spec Card ── */
