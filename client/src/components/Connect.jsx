@@ -52,11 +52,11 @@ function Connect({ general }) {
 
               <div className="connect__resume-side">
                 <a href={general?.resumeUrl || "#"} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                  RESUME <FaDownload />
+                  RESUME <FaFileDownload />
                 </a>
                 {general?.customLinkName && general?.customLinkUrl && isDocLink && (
                   <a href={general.customLinkUrl} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                    {general.customLinkName.toUpperCase()} {getIcon(general.customLinkIcon)}
+                    {general.customLinkName.toUpperCase()} <FaFileDownload />
                   </a>
                 )}
               </div>

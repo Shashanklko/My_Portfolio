@@ -120,8 +120,10 @@
 
 .connect__resume-side {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
 /* ── Spec Card ── */
