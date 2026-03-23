@@ -68,7 +68,7 @@ function Connect({ general }) {
 
               <div className="connect__resume-side">
                 <a href={general?.resumeUrl || "#"} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
-                  RESUME <FaDownload />
+                  CV <FaDownload />
                 </a>
                 {documentLinks.map((link, idx) => (
                   <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="connect__link-item resume-link-reversed">
