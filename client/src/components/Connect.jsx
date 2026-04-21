@@ -50,9 +50,14 @@ function Connect({ general }) {
 
             <div className="connect__links-grid">
               <div className="connect__links-stack">
-                <a href={`mailto:${general?.email || 'shashankkmofficial@gmail.com'}`} className="connect__link-item">
-                  <FaEnvelope /> EMAIL
-                </a>
+               <a
+  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${general?.email || 'shashankkmofficial@gmail.com'}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="connect__link-item"
+>
+  <FaEnvelope /> EMAIL
+</a>
                 <a href={general?.linkedin || 'https://linkedin.com/in/shashank20003'} target="_blank" rel="noopener noreferrer" className="connect__link-item">
                   <FaLinkedin /> LINKEDIN
                 </a>
